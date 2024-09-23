@@ -65,5 +65,7 @@ RUN set -x; \
   printf '#!/bin/sh\nexec ros run -- "$@"\n' > /usr/local/bin/sbcl \
   && chmod u+x /usr/local/bin/sbcl
 
-ENTRYPOINT ["ros", "dynamic-space-size=2560", "run", "--eval", "(ql:quickload :bordeaux-threads)", "--eval", "(ql:quickload :usocket)", "--eval", "(ql:quickload :cl-json)", "--eval", "(ql:quickload :flexi-streams)"]
+RUN ["/usr/local/bin/sbcl", "--eval", "(ql:quickload :bordeaux-threads)", "--eval", "(ql:quickload :usocket)", "--eval", "(ql:quickload :cl-json)", "--eval", "(ql:quickload :flexi-streams)"]
+
+ENTRYPOINT ["/bin/bash"]
 # docker run -it -v ${PWD}/work:/root/work -v ${PWD}/.vender:/root/.roswell/lisp/quicklisp/local-projects fukamachi/sbcl
